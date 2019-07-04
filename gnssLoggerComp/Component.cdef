@@ -1,0 +1,21 @@
+cflags:
+{
+    -std=c99
+}
+sources:
+{
+	gnssLogger.c
+	gps.c
+}
+requires:
+{
+	dir:
+	{
+		/mnt/userrw/sdcard	/
+	}
+	api:
+    {
+        positioning/le_posCtrl.api
+        positioning/le_pos.api
+    }
+}

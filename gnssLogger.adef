@@ -1,0 +1,23 @@
+sandboxed: false
+start: manual
+version: 1.0
+maxFileSystemBytes: 10000K
+
+executables:
+{
+	gnssLogger = ( gnssLoggerComp )
+}
+processes:
+{
+	run:
+	{
+		(gnssLogger)
+	}
+	
+}
+
+bindings:
+{    
+    gnssLogger.gnssLoggerComp.le_pos -> positioningService.le_pos
+    gnssLogger.gnssLoggerComp.le_posCtrl -> positioningService.le_posCtrl
+}
