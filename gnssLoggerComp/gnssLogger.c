@@ -82,7 +82,7 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 		{
 			// Write something in fd
 		
-		fprintf(fd, "%lld,%f,%f,%f,%f,%f\n", tnow, latitude, longitude, hAccuracy, altitude, vAccuracy);
+		fprintf(fd, "%lld\t%f\t%f\n", tnow, latitude, longitude);
 		}else{
 			fprintf(fd, "%s %s", timestamp, " gnssLog no data\n");
 		}
@@ -111,6 +111,46 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 COMPONENT_INIT
 {
 	LE_INFO("gnssLogTemp application has started");
+	
+	char timestamp[80] = {0};
+	char systemCommand[300] = {0};
+	time_t     now;
+    struct tm  ts;
+    int systemResult;
+    
+    // Get current time
+    time(&now);
+
+    // Format time, "yyyy-mm-dd hh:mm:ss"
+    ts = *localtime(&now);
+    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d-%H-%M-%S", &ts);
+    // move old log file to a date stamped file name
+    sprintf(systemCommand, "mv /mnt/userrw/sdcard/gnssLog.txt /mnt/userrw/sdcard/%s_gnssLog.txt", timestamp);
+
+    systemResult = system(systemCommand);
+    // Return value of -1 means that the fork() has failed (see man system).
+    if (0 == WEXITSTATUS(systemResult))
+    {
+        LE_INFO("Succesfully backed up gnss log file: sys> %s", systemCommand);
+    }
+    else
+    {
+        LE_ERROR("Error gnss log file backup Failed: (%d), sys> %s", systemResult, systemCommand);
+    }
+	
+	//write file header line for first row
+	FILE* fd = fopen ("sdcard/gnssLog.txt", "a");
+	fprintf(fd, "Time\tlatitude\tlongtitude\n");
+		// Now write this string to fd
+	if (fclose(fd) == 0)
+	{
+			// Print success message
+		LE_INFO("Data successfuly written");
+	}
+	else
+	{
+		LE_INFO("Error closing file");
+	}
 	
 	le_timer_Ref_t gnssLogTimerRef = le_timer_Create("gnssLog Timer");
     le_timer_SetMsInterval(gnssLogTimerRef, GNSS_SAMPLE_INTERVAL_IN_MILLISECONDS);
