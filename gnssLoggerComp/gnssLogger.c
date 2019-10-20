@@ -93,7 +93,7 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 		if (fclose(fd) == 0)
 		{
 			// Print success message
-			LE_INFO("Data successfuly written");
+			//LE_INFO("Data successfuly written");
 		}
 		else
 		{
