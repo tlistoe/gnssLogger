@@ -112,21 +112,22 @@ COMPONENT_INIT
 {
 	LE_INFO("gnssLogTemp application has started");
 	
-	char timestamp[80] = {0};
+	//char timestamp[80] = {0};
 	char systemCommand[300] = {0};
-	time_t     now;
-    struct tm  ts;
+	//time_t     now;
+    //struct tm  ts;
     int systemResult;
     
     // Get current time
-    time(&now);
+    //time(&now);
 
     // Format time, "yyyy-mm-dd hh:mm:ss"
-    ts = *localtime(&now);
-    strftime(timestamp, sizeof(timestamp), "%Y-%m-%d-%H-%M-%S", &ts);
+    //ts = *localtime(&now);
+    //strftime(timestamp, sizeof(timestamp), "%Y-%m-%d-%H-%M-%S", &ts);
     // move old log file to a date stamped file name
-    sprintf(systemCommand, "mv /mnt/userrw/sdcard/gnssLog.txt /mnt/userrw/sdcard/%s_gnssLog.txt", timestamp);
-
+    //sprintf(systemCommand, "mv /mnt/userrw/sdcard/gnssLog.txt /mnt/userrw/sdcard/%s_gnssLog.txt", timestamp);
+	sprintf(systemCommand, "lastStartTime=$(cat /mnt/userrw/sdcard/lastStartTime.txt); mkdir /mnt/userrw/sdcard/\"$lastStartTime\"; mv /mnt/userrw/sdcard/gnssLog.txt /mnt/userrw/sdcard/\"$lastStartTime\"/\"$lastStartTime\"_gnssLog.txt");
+	
     systemResult = system(systemCommand);
     // Return value of -1 means that the fork() has failed (see man system).
     if (0 == WEXITSTATUS(systemResult))
