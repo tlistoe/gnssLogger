@@ -82,7 +82,7 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 		{
 			// Write something in fd
 		
-		fprintf(fd, "%lld\t%f\t%f\n", tnow, latitude, longitude);
+		fprintf(fd, "%lld\t%f\t%f\t%f\t%f\t%f\n", tnow, latitude, longitude, hAccuracy, altitude, vAccuracy);
 		}else{
 			fprintf(fd, "%s %s", timestamp, " gnssLog no data\n");
 		}
@@ -141,7 +141,7 @@ COMPONENT_INIT
 	
 	//write file header line for first row
 	FILE* fd = fopen ("sdcard/gnssLog.txt", "a");
-	fprintf(fd, "Time\tlatitude\tlongtitude\n");
+	fprintf(fd, "Time\tLatitude\tLongtitude\tHAccuracy\tAltitude\tVAccuracy\n");
 		// Now write this string to fd
 	if (fclose(fd) == 0)
 	{
