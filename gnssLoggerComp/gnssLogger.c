@@ -48,6 +48,7 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 {
     //char timestamp[80] = {};
 	char timestamp[80] = {0};
+	char *display = (char*)malloc(22*sizeof(char));
 	// Atomic write example, File Descriptor case.
 	//char filenamebuff[255] = {0};
 	time_t     now;
@@ -83,6 +84,9 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 			// Write something in fd
 		
 		fprintf(fd, "%lld\t%f\t%f\t%f\t%f\t%f\n", tnow, latitude, longitude, hAccuracy, altitude, vAccuracy);
+		sprintf(display, "%f, %f", latitude, longitude);
+		piOled_Display("Lattitude Longitude", 0);
+		piOled_Display(display, 1);
 		}else{
 			fprintf(fd, "%s %s", timestamp, " gnssLog no data\n");
 		}

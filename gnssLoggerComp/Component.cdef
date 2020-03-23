@@ -17,5 +17,6 @@ requires:
     {
         positioning/le_posCtrl.api
         positioning/le_pos.api
+        piOled.api
     }
 }
