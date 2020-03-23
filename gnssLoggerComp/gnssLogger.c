@@ -87,7 +87,7 @@ static uint64_t GetCurrentTimestamp(void)
     uint64_t utcMilliSec = (uint64_t)(tv.tv_sec) * 1000 + (uint64_t)(tv.tv_usec) / 1000;
     return utcMilliSec;
 }
-
+/*
 static void kickGNSS()
 {
 	char systemCommand[300] = {0};
@@ -117,7 +117,7 @@ static void kickGNSS()
         LE_ERROR("Error (%d), sys> %s", systemResult, systemCommand);
     }
 }
-
+*/
 
 static void displayError()
 {
@@ -175,7 +175,7 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 		}else{
 			fprintf(fd, "%lld\t%s\n", tnow, "null\tnull");
 			displayError();
-			kickGNSS();
+			//kickGNSS();
 			//fprintf(fd, "%s %s", timestamp, " gnssLog no data\n");
 		}
 		 
