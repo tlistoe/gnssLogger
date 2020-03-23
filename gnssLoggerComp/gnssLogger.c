@@ -135,6 +135,7 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 {
     //char timestamp[80] = {};
 	char timestamp[80] = {0};
+	char *display = (char*)malloc(22*sizeof(char));
 	// Atomic write example, File Descriptor case.
 	//char filenamebuff[255] = {0};
 	time_t     now;
@@ -168,10 +169,13 @@ static void gnssLogTimer(le_timer_Ref_t gnssLogTimerRef)
 		if (posRes == LE_OK)
 		{
 			// Write something in fd
-		
-		fprintf(fd, "%lld\t%f\t%f\n", tnow, latitude, longitude);
-		displayOK();
-		
+		  	
+		fprintf(fd, "%lld\t%f\t%f\t%f\t%f\t%f\n", tnow, latitude, longitude, hAccuracy, altitude, vAccuracy);
+		sprintf(display, "%f, %f", latitude, longitude);
+		piOled_Display("Lattitude Longitude", 0);
+		piOled_Display(display, 1);
+    displayOK();
+
 		}else{
 			fprintf(fd, "%lld\t%s\n", tnow, "null\tnull");
 			displayError();
@@ -231,7 +235,7 @@ COMPONENT_INIT
 	
 	//write file header line for first row
 	FILE* fd = fopen ("sdcard/gnssLog.txt", "a");
-	fprintf(fd, "Time\tlatitude\tlongtitude\n");
+	fprintf(fd, "Time\tLatitude\tLongtitude\tHAccuracy\tAltitude\tVAccuracy\n");
 		// Now write this string to fd
 	if (fclose(fd) == 0)
 	{
