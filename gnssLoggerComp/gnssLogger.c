@@ -220,7 +220,7 @@ COMPONENT_INIT
     //strftime(timestamp, sizeof(timestamp), "%Y-%m-%d-%H-%M-%S", &ts);
     // move old log file to a date stamped file name
     //sprintf(systemCommand, "mv /mnt/userrw/sdcard/gnssLog.txt /mnt/userrw/sdcard/%s_gnssLog.txt", timestamp);
-	sprintf(systemCommand, "lastStartTime=$(cat /mnt/userrw/sdcard/lastStartTime.txt); mkdir /mnt/userrw/sdcard/\"$lastStartTime\"; mv /mnt/userrw/sdcard/gnssLog.txt /mnt/userrw/sdcard/\"$lastStartTime\"/\"$lastStartTime\"_gnssLog.txt");
+	/*sprintf(systemCommand, "lastStartTime=$(cat /mnt/userrw/sdcard/lastStartTime.txt); mkdir /mnt/userrw/sdcard/\"$lastStartTime\"; mv /mnt/userrw/sdcard/gnssLog.txt /mnt/userrw/sdcard/\"$lastStartTime\"/\"$lastStartTime\"_gnssLog.txt");
 	
     systemResult = system(systemCommand);
     // Return value of -1 means that the fork() has failed (see man system).
@@ -232,6 +232,7 @@ COMPONENT_INIT
     {
         LE_ERROR("Error gnss log file backup Failed: (%d), sys> %s", systemResult, systemCommand);
     }
+	*/
 	
 	//write file header line for first row
 	FILE* fd = fopen ("sdcard/gnssLog.txt", "a");
